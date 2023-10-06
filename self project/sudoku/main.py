@@ -123,7 +123,7 @@ class SudokuUI(Frame):
     def __cell_clicked(self, event):
         if self.game.game_over:
             return
-                
+        
         x = event.x
         y = event.y
 
@@ -136,7 +136,7 @@ class SudokuUI(Frame):
             if (row == self.row and col == self.col):
                 self.row = -1
                 self.col = -1
-            elif self.game.puzzle[row][col] == 0:
+            elif self.game.start_puzzle[row][col] == 0:
                 self.row = row
                 self.col = col
 
@@ -153,10 +153,10 @@ class SudokuUI(Frame):
             return
         if self.row >= 0 and self.col >= 0 and event.char in "1234567890":
             self.game.puzzle[self.row][self.col] = int(event.char)
-            # self.col = -1
-            # self.row = -1
+            self.col = -1
+            self.row = -1
 
-            # self.canvas.delete("highlight")
+            self.canvas.delete("highlight")
 
             self.__draw_puzzle()
             self.__draw_cursor()

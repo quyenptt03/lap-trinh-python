@@ -1,35 +1,14 @@
-import re
 import openpyxl
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
-from tkinter import filedialog
 
-# Tạo danh sách các môn học
 mon_hoc = [
     "Lập Trình Python",
     "Lập Trình Java",
     "Công nghệ phần mềm",
     "Phát triển ứng dụng web",
 ]
-
-
-def is_valid_email(email):
-    pattern = r"^[\w\.-]+@dlu\.edu\.vn$"
-    return re.match(pattern, email)
-
-
-def is_valid_date(date):
-    pattern = r"^\d{2}/\d{2}/\d{4}$"
-    return re.match(pattern, date)
-
-
-def is_valid_mssv(mssv):
-    return mssv.isdigit() and len(mssv) == 7
-
-
-def is_valid_phone(phone):
-    return phone.isdigit() and len(phone) == 10
 
 
 def register():
@@ -47,25 +26,12 @@ def register():
         if var.get():
             selected_mon_hoc.append(mon)
 
-    if (
-        not is_valid_mssv(mssv)
-        or not is_valid_phone(phone)
-        or not is_valid_date(ngay_sinh)
-        or not is_valid_email(email)
-        or hoc_ky not in ["1", "2", "3"]
-        or nam_hoc not in ["2022-2023", "2023-2024", "2024-2025"]
-        or not selected_mon_hoc
-    ):
-        messagebox.showerror("Lỗi", "Thông tin không hợp lệ. Vui lòng kiểm tra lại.")
-    else:
-        save_to_excel(
-            mssv, ten, ngay_sinh, email, phone, hoc_ky, nam_hoc, selected_mon_hoc
-        )
-        messagebox.showinfo("Thông báo", "Đăng ký thành công!")
+    save_to_excel(mssv, ten, ngay_sinh, email, phone, hoc_ky, nam_hoc, selected_mon_hoc)
+    messagebox.showinfo("Thông báo", "Đăng ký thành công!")
 
 
 def save_to_excel(mssv, ten, ngay_sinh, email, phone, hoc_ky, nam_hoc, mon_hoc):
-    file_path = "C:\\Users\\Admin\\Desktop\\sinh_vien.xlsx"
+    file_path = "D:\\third year\\python programing\\lab4\\excel.xlsx"
 
     if file_path:
         try:
@@ -90,11 +56,11 @@ def save_to_excel(mssv, ten, ngay_sinh, email, phone, hoc_ky, nam_hoc, mon_hoc):
         wb.save(file_path)
         messagebox.showinfo("Thông báo", f"Đã lưu vào {file_path}")
     else:
-        messagebox.showinfo("Thông báo", "Không có tệp nào được chọn.")
+        messagebox.showinfo("Thông báo", "Không tìm thấy file")
 
 
 root = tk.Tk()
-root.title("Đăng ký sinh viên")
+root.title("Đăng ký học phần")
 
 main_frame = tk.Frame(root)
 main_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
@@ -118,7 +84,7 @@ ten_label.grid(row=2, column=0, padx=10, pady=5, sticky=tk.W)
 ten_entry = ttk.Entry(main_frame, width=51)
 ten_entry.grid(row=2, column=1, padx=10, pady=5, sticky=tk.W)
 
-ngay_sinh_label = ttk.Label(main_frame, text="Ngày sinh (dd/mm/yyyy):")
+ngay_sinh_label = ttk.Label(main_frame, text="Ngày sinh:")
 ngay_sinh_label.grid(row=3, column=0, padx=10, pady=5, sticky=tk.W)
 ngay_sinh_entry = ttk.Entry(main_frame, width=51)
 ngay_sinh_entry.grid(row=3, column=1, padx=10, pady=5, sticky=tk.W)
@@ -147,19 +113,19 @@ nam_hoc_var = tk.StringVar()
 nam_hoc_combobox = ttk.Combobox(
     main_frame, textvariable=nam_hoc_var, values=nam_hoc_options, width=48
 )
-nam_hoc_combobox.grid(row=7, column=1, padx=9, pady=5, sticky=tk.W)
+nam_hoc_combobox.grid(row=7, column=1, padx=5, pady=5, sticky=tk.W)
 nam_hoc_combobox.set(nam_hoc_options[0])
 
 mon_hoc_label = ttk.Label(main_frame, text="Chọn môn học:")
 mon_hoc_label.grid(row=8, column=0, padx=10, pady=5, sticky=tk.W)
 
 mid = len(mon_hoc) // 2
-mon_hoc_part1 = mon_hoc[:mid]
-mon_hoc_part2 = mon_hoc[mid:]
+mon_hoc_col1 = mon_hoc[:mid]
+mon_hoc_col2 = mon_hoc[mid:]
 
 mon_hoc_vars = {}
 
-for i, mon in enumerate(mon_hoc_part1):
+for i, mon in enumerate(mon_hoc_col1):
     var = tk.BooleanVar()
     mon_hoc_vars[mon] = var
     mon_hoc_checkbutton = tk.Checkbutton(
@@ -167,9 +133,11 @@ for i, mon in enumerate(mon_hoc_part1):
         text=mon,
         variable=var,
     )
-    mon_hoc_checkbutton.grid(row=9 + i, column=1, padx=1, pady=2, sticky=tk.W)
+    mon_hoc_checkbutton.grid(
+        row=8 + i, column=1, padx=1, pady=2, columnspan=2, sticky=tk.W
+    )
 
-for i, mon in enumerate(mon_hoc_part2):
+for i, mon in enumerate(mon_hoc_col2):
     var = tk.BooleanVar()
     mon_hoc_vars[mon] = var
     mon_hoc_checkbutton = tk.Checkbutton(
@@ -178,17 +146,14 @@ for i, mon in enumerate(mon_hoc_part2):
         variable=var,
     )
 
-    x_coordinate = 400
-    y_coordinate = 286 + i * 30
-
-    mon_hoc_checkbutton.place(x=x_coordinate, y=y_coordinate)
+    mon_hoc_checkbutton.grid(row=8 + i, column=2, padx=1, pady=2, sticky=tk.W)
 
 
 register_button = tk.Button(
     main_frame,
     text="Đăng ký",
     command=register,
-    width=7,
+    width=10,
     height=1,
 )
 register_button.grid(row=10 + len(mon_hoc), column=0, columnspan=4)
@@ -197,7 +162,7 @@ thoat_button = tk.Button(
     main_frame,
     text="Thoát",
     command=root.quit,
-    width=7,
+    width=10,
     height=1,
 )
 thoat_button.grid(row=10 + len(mon_hoc), column=2, columnspan=4)
