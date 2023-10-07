@@ -1,14 +1,15 @@
-from hinh_hoc import HinhHoc
-from hinh_tron import HinhTron
-from hinh_chu_nhat import HinhChuNhat
-from hinh_vuong import HinhVuong
+from danh_sach_hinh_hoc import DanhSachHinhHoc
 
-hh1 = HinhHoc(2)
-ht1 = HinhTron(5)
-hcn1 = HinhChuNhat(3, 8)
-hv1 = HinhVuong(5)
+dshh = DanhSachHinhHoc()
+ds = DanhSachHinhHoc()
+dshh.docTuFile('D:\\third year\\python programing\\lab2\\HinhHoc\\dshinhhoc.txt')
+dshh.xuat()
 
-ht1.Xuat()
-hh1.Xuat()
-hcn1.Xuat()
-hv1.Xuat()
+print('hinh co dien tich lon nhat', dshh.timHinhCoDienTichLonNhat())
+print('hinh co dien tich nho nhat', dshh.TimHinhCoDienTichNhoNhat())
+
+print('Sap giam theo dien tich')
+dshh.SapGiamTheoDT()
+dshh.xuat()
+
+

@@ -7,6 +7,7 @@ from danh_sach_phan_so import DanhSachPhanSo
 # ps4 = PhanSo(5,2)
 
 dsps = DanhSachPhanSo()
+ds = DanhSachPhanSo()
 dsps.docTuFile("test.txt")
 print("Danh sach phan so:")
 dsps.xuat()
@@ -18,3 +19,11 @@ dsps.xuat()
 # dsps.xuat()
 print(dsps.demPSAm())
 print("PS duong nho nhat: " ,dsps.timPSDuongMin())
+print("Sap phan so giam tren mau: ")
+dsps.SapXepGiamTrenMau()
+dsps.xuat()
+
+dsps.SapXepTangTrenTu()
+dsps.xuat()
+
+print("\nTong phan so am: ", dsps.TongPhanSoAm())

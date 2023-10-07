@@ -55,6 +55,6 @@ update SudokuPuzzle
 set Completed = 1
 where PuzzleID = 1
 
-delete SudokuPuzzle
+delete SudokuPuzzle where PuzzleID = 18
 drop table SudokuPuzzle
 

@@ -1,8 +1,9 @@
 from hinh_hoc import HinhHoc
 
 class HinhChuNhat(HinhHoc):
-    def __init__(self, cd: float, cr: float):
-        super().__init__(cd)
+    def __init__(self, canh: float, cr: float):
+        super().__init__(canh)
+        self.cd = canh
         self.cr = cr
     
     @property
@@ -14,6 +15,6 @@ class HinhChuNhat(HinhHoc):
     
     def TinhDienTich(self) -> float:
         return self.ChieuDai * self.ChieuRong
-
-    def Xuat(self) -> str:
-        print(f"Hinh chu nhat co chieu dai {self.ChieuDai}, chieu rong {self.ChieuRong} co dien tich la: {self.TinhDienTich()}")
+    def __str__(self) -> str:
+        return super().__str__() + f"chu nhat co chieu dai {self.ChieuDai}, chieu rong {self.ChieuRong} co dien tich la: {self.TinhDienTich()}"
+    

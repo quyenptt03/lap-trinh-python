@@ -1,8 +1,12 @@
 from hinh_chu_nhat import HinhChuNhat
+from hinh_hoc import HinhHoc
 
-class HinhVuong(HinhChuNhat):
+class HinhVuong(HinhHoc):
     def __init__(self, canh: float):
-        super().__init__(canh, canh)
+        super().__init__(canh)
+    
+    def TinhDienTich(self):
+        return self.canh*self.canh
 
-    def Xuat(self) -> str:
-        print(f"Hinh vuong co canh {self.canh} co dien tich la {self.TinhDienTich()}")
+    def __str__(self) -> str:
+        return super().__str__() + f"vuong co canh {self.canh}, co dien tich = {self.TinhDienTich()}"

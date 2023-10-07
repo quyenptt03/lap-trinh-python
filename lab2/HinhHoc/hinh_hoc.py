@@ -3,6 +3,6 @@ class HinhHoc:
         self.canh = cd
     def TinhDienTich(self)->float:
         pass
-    def Xuat(self)->str:
-        print(f"Dien tich cua hinh co canh {self.canh} la {self.TinhDienTich()}")
+    def __str__(self) -> str:
+        return 'Hinh '
     

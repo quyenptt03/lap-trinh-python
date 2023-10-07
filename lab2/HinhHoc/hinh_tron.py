@@ -12,3 +12,6 @@ class HinhTron(HinhHoc):
     def TinhDienTich(self) -> float:
         return math.pi * math.pow(self.banKinh,2)
     
+    def __str__(self) -> str:
+        return super().__str__() + f"tron co ban kinh {self.banKinh}, co dien tich {self.TinhDienTich()}"
+    

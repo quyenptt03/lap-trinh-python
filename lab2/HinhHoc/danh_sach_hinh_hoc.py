@@ -14,48 +14,48 @@ class DanhSachHinhHoc():
     
     def xuat(self):
         for hh in self.ds:
-            hh = HinhHoc(hh)
-            hh.Xuat()
+            print(hh)
+            print()
 
-    def timDTMax(self):
-        max = -1
-        for hinh in self.ds:
-            hinh = HinhHoc(hinh)
-            if (hinh.TinhDienTich() > max):
-                max = hinh.TinhDienTich()
-        return max
-    
-    def timDTMin(self):
-        min = sys.maxsize
-        for hinh in self.ds:
-            hinh = HinhHoc(hinh)
-            if (hinh.TinhDienTich() < min):
-                min = hinh.TinhDienTich()
-        return min
+    def docTuFile(self, fileName: str):
+        f = open(fileName, 'r', encoding="utf8")
+        lines = f.readlines()
+
+        for line in lines:
+            items = line.split(",")
+            if (int(items[0]) == LoaiHinh.HinhVuong.value):
+                hv = HinhVuong(float(items[1]))
+                self.themHinh(hv)
+            elif (int(items[0]) == LoaiHinh.HinhChuNhat.value):
+                hcn = HinhChuNhat(float(items[1]), float(items[2]))
+                self.themHinh(hcn)
+            elif (int(items[0]) == LoaiHinh.HinhTron.value):
+                ht = HinhTron(float(items[1]))
+                self.themHinh(ht)
+        return self.ds
     
     def timHinhCoDienTichLonNhat(self):
-        kq = DanhSachHinhHoc()
-        dtmax = self.timDTMax()
-        for hinh in self.ds:
-            hinh = HinhHoc(hinh)
-            if hinh.TinhDienTich() == dtmax:
-                kq.ds.append(hinh)
-        
-        return kq
+        max = 0
+        result = HinhHoc(0)
+        for hh in self.ds:
+            if (hh.TinhDienTich() > max):
+                max = hh.TinhDienTich()
+                result = hh
+        return result
 
     def TimHinhCoDienTichNhoNhat(self):
-        kq = DanhSachHinhHoc()
-        dtmin = self.timDTMin()
-        for hinh in self.ds:
-            hinh = HinhHoc(hinh)
-            if hinh.TinhDienTich() == dtmin:
-                kq.ds.append(hinh)
-        
+        min = sys.maxsize
+        kq = HinhHoc(0)
+        for hh in self.ds:
+            if (hh.TinhDienTich() < min):
+                min = hh.TinhDienTich()
+                kq = hh
         return kq
+    
     def TimHinhTronNhoNhat(self):
         pass
     def SapGiamTheoDT(self):
-        return self.ds.sort(key=lambda x: x.dienTich, reverse=True)
+        return self.ds.sort(key=lambda x: x.TinhDienTich(), reverse=True)
     def DemSoLuongHinh(self, loai: LoaiHinh):
         result = []
         if (loai == LoaiHinh.HinhTron):
@@ -65,20 +65,19 @@ class DanhSachHinhHoc():
         elif (loai == LoaiHinh.HinhChuNhat):
             result = [hh for hh in self.ds if isinstance(hh, HinhChuNhat)]
         return f"Co {len(result)} {loai}"
+    
     def TinhTongDT(self):
         sum = 0
         for hh in self.ds:
             hh = HinhHoc(hh)
             sum += hh.TinhDienTich()
         return sum
-    def TimHinhCoDTLonNhat(kieu: LoaiHinh):
-        pass
     def TimViTriCuaHinh(self, h: HinhHoc):
         for hh in self.ds:
             if (isinstance(hh, h) and hh.canh == h.canh):
                 return hh
     def TimHinhTheoDTich(self, dt: float):
-        return [hh for hh in self.ds if (hh.dienTich == dt)]
+        return [hh for hh in self.ds if (hh.TinhDienTich() == dt)]
     def XoaHinh(self, hh: HinhHoc):
         self.ds.remove(hh)
     
